@@ -1,6 +1,6 @@
 services:
   app:
-    container_name: http-proxy
+    container_name: proxy
     image: ghcr.io/leonia23/http-proxy:latest
     ports:
       - "3000:3000"

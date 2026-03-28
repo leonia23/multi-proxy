@@ -31,53 +31,67 @@
 
 ## 📂 Формат файла пользователей (`users.txt`)
 
-Файл должен находиться в монтируемой папке и поддерживает формат:
-you_user_name_1:password_1
-you_user_name_1:password_1
-...
+Файл должен находиться в монтируемой папке и поддерживает формат:\
+\
+you_user_name_1:password_1\
+you_user_name_1:password_1\
+...\
 
 ---
 
-## 📂 API для аторизации
+## 📂 API для авторизации
 
 URL Задаётся через переменную окружения: AUTH_API_URL
 
 Пример запроса:
 POST /auth
+
+````json
 {
-"username": "user1",
-"password": "pass123"
+  "username": "user1",
+  "password": "pass123"
 }
 
-Формат ответа
-Поле Тип Описание
-success boolean true — авторизация успешна, false — неуспешна
-message string Сообщение об ошибке, если авторизация неуспешна
+Формат ответа\
+Поле Тип Описание\
+success boolean true — авторизация успешна, false — неуспешна\
+message string Сообщение об ошибке, если авторизация неуспешна\
 
 Пример успешного ответа:
+```json
 {
-"success": true
+  "success": true
 }
 
 Пример ошибки:
+```json
 {
-"success": false,
-"message": "Invalid credentials"
+  "success": false,
+  "message": "Invalid credentials"
 }
 
-Если success=false, пользователь не получает доступ к прокси.
-API должен быть доступен из контейнера сервиса (если используете Docker, убедитесь, что сеть контейнера позволяет доступ к API).
-Все запросы рекомендуется выполнять через HTTPS для безопасности паролей.
+Если success=false, пользователь не получает доступ к прокси.\
+API должен быть доступен из контейнера сервиса (если используете Docker, убедитесь, что сеть контейнера позволяет доступ к API).\
+Все запросы рекомендуется выполнять через HTTPS для безопасности паролей.\
 
 ---
 
 ## 🐳 Запуск через Docker Compose
 
+```yaml
 services:
-app:
-container_name: multi-proxy
-image: ghcr.io/leonia23/http-proxy:latest
-ports: - "3000:3000" # HTTP Proxy - "1080:1080" # SOCKS5
-environment: - AUTH_METHOD=env - AUTH_USER=userName - AUTH_PASS=password
-volumes: - ./config:/app/config
-restart: unless-stopped
+  app:
+    container_name: multi-proxy
+    image: ghcr.io/leonia23/http-proxy:latest
+    ports:
+      - "3000:3000"
+      - "1080:1080"
+    environment:
+      - AUTH_METHOD=env
+      - AUTH_USER=userName
+      - AUTH_PASS=password
+    volumes:
+      - ./config:/app/config
+    restart: unless-stopped
+
+````
