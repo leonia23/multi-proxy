@@ -1,0 +1,17 @@
+services:
+  app:
+    container_name: http-proxy
+    image: ghcr.io/leonia23/http-proxy:latest
+    ports:
+      - "3000:3000"
+      - "1080:1080"
+    environment:
+      #env,file,api
+      - AUTH_METHOD=env
+      - AUTH_USER=userName
+      - AUTH_PASS=password
+      - AUTH_FILE=/app/config/users.txt
+      - AUTH_API_URL=you_api_url
+    volumes:
+      - ./config:/app/config
+    restart: unless-stopped
