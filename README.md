@@ -35,7 +35,7 @@
 \
 you_user_name_1:password_1\
 you_user_name_1:password_1\
-...\
+...
 
 ---
 
@@ -46,11 +46,12 @@ URL Задаётся через переменную окружения: AUTH_AP
 Пример запроса:
 POST /auth
 
-````json
+```json
 {
   "username": "user1",
   "password": "pass123"
 }
+```
 
 Формат ответа\
 Поле Тип Описание\
@@ -58,17 +59,21 @@ success boolean true — авторизация успешна, false — неу
 message string Сообщение об ошибке, если авторизация неуспешна\
 
 Пример успешного ответа:
+
 ```json
 {
   "success": true
 }
+```
 
 Пример ошибки:
+
 ```json
 {
   "success": false,
   "message": "Invalid credentials"
 }
+```
 
 Если success=false, пользователь не получает доступ к прокси.\
 API должен быть доступен из контейнера сервиса (если используете Docker, убедитесь, что сеть контейнера позволяет доступ к API).\
@@ -93,5 +98,4 @@ services:
     volumes:
       - ./config:/app/config
     restart: unless-stopped
-
-````
+```
