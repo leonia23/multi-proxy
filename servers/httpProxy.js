@@ -1,19 +1,20 @@
 import ProxyChain from "proxy-chain";
 
-function createServer(port = 3000) {
+function createServer(port = 3000, authService) {
   const USERNAME = process.env.PROXY_USERNAME || null;
   const PASSWORD = process.env.PROXY_PASSWORD || null;
 
   const server = new ProxyChain.Server({
     port,
 
-    prepareRequestFunction: ({ request, username, password }) => {
+    prepareRequestFunction: async ({ request, username, password }) => {
       console.log("Request:", request.url);
 
-      if (USERNAME && PASSWORD) {
-        if (username !== USERNAME || password !== PASSWORD) {
-          return { requestAuthentication: true };
-        }
+      const resultAuth = await authService.validate(username, password);
+
+      if (!resultAuth.success) {
+        console.log(`incorrect user/pass:${username}  ${password}`);
+        return { requestAuthentication: true };
       }
       return {};
     },

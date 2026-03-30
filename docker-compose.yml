@@ -8,7 +8,7 @@ services:
     environment:
       #env,file,api
       - AUTH_METHOD=env
-      - AUTH_USER=userName
+      - AUTH_USER=user
       - AUTH_PASS=password
       - AUTH_FILE=/app/config/users.txt
       - AUTH_API_URL=you_api_url
